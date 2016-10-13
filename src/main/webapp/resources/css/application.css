@@ -1,0 +1,54 @@
+.clear{
+    clear: both;
+}
+
+.button{
+    padding: 9px 8px 9px 8px;
+}
+
+.input-padding{
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.container-fluid{
+    background-color: #333;
+    color: white;
+}
+
+.footer{
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    text-align: center;
+    padding: 10px 0px 10px 0px;
+}
+
+.text-padding{
+    padding-left: 60px;
+    padding-right: 20px;
+    font-size:15px;
+}
+
+.siteName:hover, .siteName:visited, .siteName, .siteName:focus{
+    text-decoration: none;
+    color: white;
+}
+
+.navbar-toggle{
+    margin-top: 17px;
+}
+
+.form-group{
+    margin-bottom: 0px;
+}
+
+#myNavbar{
+    float: right;
+    padding-top: 15px;
+}
+
+.profile{
+    padding-bottom: 0px;
+}
