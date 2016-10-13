@@ -1,6 +1,7 @@
 package com.model;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -54,17 +55,17 @@ public class Issues {
 
 	@OneToOne(cascade = CascadeType.ALL)
 	@PrimaryKeyJoinColumn
-	private IssueStatus issueStatus;
+	private List<IssueStatus> issueStatus;
 
 	
 	public Issues() {
-		// TODO Auto-generated constructor stub
+		
 	}
 	
 	public Issues(int id, UserDetails createdBy, Timestamp createdOn,
 			Department department, String body, String currentStatus,
 			String priority, Timestamp targetResolutionDate,
-			Timestamp actualResolutionDate, IssueStatus issueStatus) {
+			Timestamp actualResolutionDate, List<IssueStatus> issueStatus) {
 		super();
 		this.id = id;
 		this.createdBy = createdBy;
@@ -77,6 +78,9 @@ public class Issues {
 		this.actualResolutionDate = actualResolutionDate;
 		this.issueStatus = issueStatus;
 	}
+
+
+
 
 	public int getId() {
 		return id;
@@ -151,11 +155,11 @@ public class Issues {
 		this.actualResolutionDate = actualResolutionDate;
 	}
 
-	public IssueStatus getIssueStatus() {
+	public List<IssueStatus> getIssueStatus() {
 		return issueStatus;
 	}
 
-	public void setIssueStatus(IssueStatus issueStatus) {
+	public void setIssueStatus(List<IssueStatus> issueStatus) {
 		this.issueStatus = issueStatus;
 	}
 
@@ -168,6 +172,7 @@ public class Issues {
 				+ ", actualResolutionDate=" + actualResolutionDate
 				+ ", issueStatus=" + issueStatus + "]";
 	}
-
+	
+	
 	
 }
