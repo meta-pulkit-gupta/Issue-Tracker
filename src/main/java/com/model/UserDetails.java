@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
 import org.springframework.stereotype.Component;
 
 @Entity
@@ -39,9 +40,25 @@ public class UserDetails {
 	@Column(name = "profile_pic_url")
 	private String pictureURL;
 
+	
 	public UserDetails() {
 
 	}
+	
+
+	public UserDetails(int id, String googleId, String emailId, String name,
+			String role, Department dept_id, String pictureURL) {
+		super();
+		this.id = id;
+		this.googleId = googleId;
+		this.emailId = emailId;
+		this.name = name;
+		this.role = role;
+		this.dept_id = dept_id;
+		this.pictureURL = pictureURL;
+	}
+
+
 
 	public int getId() {
 		return id;
