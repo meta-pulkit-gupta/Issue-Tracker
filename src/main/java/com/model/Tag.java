@@ -20,6 +20,16 @@ public class Tag {
 
 	@Column(name = "tag_title")
 	private String tagTitle;
+	
+	public Tag() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public Tag(int id, String tagTitle) {
+		super();
+		this.id = id;
+		this.tagTitle = tagTitle;
+	}
 
 	public int getId() {
 		return id;

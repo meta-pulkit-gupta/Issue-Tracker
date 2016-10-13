@@ -27,6 +27,17 @@ public class Attachement {
 
 	@Column(name = "attachment_url")
 	private String attachmentURL;
+	
+	public Attachement() {
+		
+	}
+
+	public Attachement(int id, Issues issue, String attachmentURL) {
+		super();
+		this.id = id;
+		this.issue = issue;
+		this.attachmentURL = attachmentURL;
+	}
 
 	public int getId() {
 		return id;

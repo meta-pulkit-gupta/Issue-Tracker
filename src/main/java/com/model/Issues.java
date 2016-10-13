@@ -40,6 +40,9 @@ public class Issues {
 	@Column(name = "body")
 	private String body;
 
+	@Column(name = "current_status")
+	private String currentStatus;
+
 	@Column(name = "priority")
 	private String priority;
 
@@ -52,6 +55,28 @@ public class Issues {
 	@OneToOne(cascade = CascadeType.ALL)
 	@PrimaryKeyJoinColumn
 	private IssueStatus issueStatus;
+
+	
+	public Issues() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public Issues(int id, UserDetails createdBy, Timestamp createdOn,
+			Department department, String body, String currentStatus,
+			String priority, Timestamp targetResolutionDate,
+			Timestamp actualResolutionDate, IssueStatus issueStatus) {
+		super();
+		this.id = id;
+		this.createdBy = createdBy;
+		this.createdOn = createdOn;
+		this.department = department;
+		this.body = body;
+		this.currentStatus = currentStatus;
+		this.priority = priority;
+		this.targetResolutionDate = targetResolutionDate;
+		this.actualResolutionDate = actualResolutionDate;
+		this.issueStatus = issueStatus;
+	}
 
 	public int getId() {
 		return id;
@@ -77,8 +102,6 @@ public class Issues {
 		this.createdOn = createdOn;
 	}
 
-	
-
 	public Department getDepartment() {
 		return department;
 	}
@@ -93,6 +116,15 @@ public class Issues {
 
 	public void setBody(String body) {
 		this.body = body;
+	}
+
+	
+	public String getCurrentStatus() {
+		return currentStatus;
+	}
+
+	public void setCurrentStatus(String currentStatus) {
+		this.currentStatus = currentStatus;
 	}
 
 	public String getPriority() {
@@ -131,11 +163,11 @@ public class Issues {
 	public String toString() {
 		return "Issues [id=" + id + ", createdBy=" + createdBy + ", createdOn="
 				+ createdOn + ", department=" + department + ", body=" + body
-				+ ", priority=" + priority + ", targetResolutionDate="
-				+ targetResolutionDate + ", actualResolutionDate="
-				+ actualResolutionDate + ", issueStatus=" + issueStatus + "]";
+				+ ", currentStatus=" + currentStatus + ", priority=" + priority
+				+ ", targetResolutionDate=" + targetResolutionDate
+				+ ", actualResolutionDate=" + actualResolutionDate
+				+ ", issueStatus=" + issueStatus + "]";
 	}
 
 	
-
 }
