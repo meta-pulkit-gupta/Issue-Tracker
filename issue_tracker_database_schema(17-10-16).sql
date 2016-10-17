@@ -2,6 +2,7 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
 
+DROP SCHEMA IF EXISTS `issue_tracker` ;
 CREATE SCHEMA IF NOT EXISTS `issue_tracker` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
 USE `issue_tracker` ;
 
@@ -51,6 +52,7 @@ CREATE  TABLE IF NOT EXISTS `issue_tracker`.`issues` (
   `priority` ENUM('low','medium','high') NULL DEFAULT 'low' ,
   `target_resolution_date` TIMESTAMP NULL ,
   `actual_resolution_date` TIMESTAMP NULL ,
+  `current_status` VARCHAR(45) NULL ,
   PRIMARY KEY (`issue_id`) ,
   INDEX `fk_issues_user_details` (`created_by` ASC) ,
   INDEX `fk_issues_department1` (`dept_id` ASC) ,
@@ -87,30 +89,6 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `issue_tracker`.`issue_resolvers`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `issue_tracker`.`issue_resolvers` ;
-
-CREATE  TABLE IF NOT EXISTS `issue_tracker`.`issue_resolvers` (
-  `issue_id` INT NOT NULL ,
-  `resolver_id` INT NOT NULL ,
-  PRIMARY KEY (`issue_id`, `resolver_id`) )
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `issue_tracker`.`issue_tags`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `issue_tracker`.`issue_tags` ;
-
-CREATE  TABLE IF NOT EXISTS `issue_tracker`.`issue_tags` (
-  `issue_id` INT NOT NULL ,
-  `tag_id` INT NOT NULL ,
-  PRIMARY KEY (`issue_id`, `tag_id`) )
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `issue_tracker`.`tags`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `issue_tracker`.`tags` ;
@@ -123,16 +101,39 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `issue_tracker`.`issue_tags`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `issue_tracker`.`issue_tags` ;
+
+CREATE  TABLE IF NOT EXISTS `issue_tracker`.`issue_tags` (
+  `issue_id` INT NOT NULL ,
+  `tag_id` INT NOT NULL ,
+  PRIMARY KEY (`issue_id`, `tag_id`) ,
+  INDEX `fk_issue_tags_issues1` (`issue_id` ASC) ,
+  INDEX `fk_issue_tags_tags1` (`tag_id` ASC) ,
+  CONSTRAINT `fk_issue_tags_issues1`
+    FOREIGN KEY (`issue_id` )
+    REFERENCES `issue_tracker`.`issues` (`issue_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_issue_tags_tags1`
+    FOREIGN KEY (`tag_id` )
+    REFERENCES `issue_tracker`.`tags` (`tag_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `issue_tracker`.`issue_status`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `issue_tracker`.`issue_status` ;
 
 CREATE  TABLE IF NOT EXISTS `issue_tracker`.`issue_status` (
   `issue_id` INT NOT NULL ,
-  `status` ENUM('received','approved','assigned','resolved','closed','rejected') NOT NULL DEFAULT 'received' ,
-  `updated_on` TIMESTAMP NOT NULL ,
+  `status` ENUM('received','approved','assigned','resolved','closed','conflict','rejected') NOT NULL DEFAULT 'received' ,
+  `updated_on` TIMESTAMP NULL ,
   `updated_by` INT NULL ,
-  PRIMARY KEY (`issue_id`, `status`) ,
   INDEX `fk_issue_status_issues1` (`issue_id` ASC) ,
   CONSTRAINT `fk_issue_status_issues1`
     FOREIGN KEY (`issue_id` )
@@ -155,6 +156,30 @@ CREATE  TABLE IF NOT EXISTS `issue_tracker`.`comments` (
   PRIMARY KEY (`comment_id`) ,
   INDEX `fk_comments_issues1` (`issue_id` ASC) ,
   CONSTRAINT `fk_comments_issues1`
+    FOREIGN KEY (`issue_id` )
+    REFERENCES `issue_tracker`.`issues` (`issue_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `issue_tracker`.`issue_resolvers`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `issue_tracker`.`issue_resolvers` ;
+
+CREATE  TABLE IF NOT EXISTS `issue_tracker`.`issue_resolvers` (
+  `issue_id` INT NOT NULL ,
+  `resolver_id` INT NOT NULL ,
+  PRIMARY KEY (`issue_id`, `resolver_id`) ,
+  INDEX `fk_user_details_has_issues_issues1` (`issue_id` ASC) ,
+  INDEX `fk_user_details_has_issues_user_details1` (`resolver_id` ASC) ,
+  CONSTRAINT `fk_user_details_has_issues_user_details1`
+    FOREIGN KEY (`resolver_id` )
+    REFERENCES `issue_tracker`.`user_details` (`user_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_user_details_has_issues_issues1`
     FOREIGN KEY (`issue_id` )
     REFERENCES `issue_tracker`.`issues` (`issue_id` )
     ON DELETE NO ACTION
