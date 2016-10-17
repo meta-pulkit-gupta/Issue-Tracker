@@ -86,7 +86,7 @@ public class Issue {
 	
 	
 	@Autowired
-	@ManyToMany
+	@ManyToMany(cascade = { CascadeType.ALL })
 	@JoinTable(name = "issue_tags", 
 				joinColumns = { @JoinColumn(name = "issue_id") }, 
 				inverseJoinColumns = { @JoinColumn(name = "tag_id") })
