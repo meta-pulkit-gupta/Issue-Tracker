@@ -1,11 +1,14 @@
 package com.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -26,18 +29,30 @@ public class Department {
 	private String departmentName;
 
 	@Autowired
-	@OneToOne
-	@JoinColumn(name = "dept_head")
+	@OneToOne(mappedBy="deptHead")
 	private UserDetails departmentHead;
 	
-	public Department() {
-	}
+	@Autowired
+	@OneToMany(mappedBy="department", fetch=FetchType.LAZY)
+	private List<Issue> allIssues;
 	
-	public Department(int id, String departmentName, UserDetails departmentHead) {
+	@Autowired
+	@OneToMany(mappedBy="department", fetch=FetchType.LAZY)
+	private List<UserDetails> resolvers;
+
+	public Department() {
+		super();
+	}
+
+	public Department(int id, String departmentName,
+			UserDetails departmentHead, List<Issue> allIssues,
+			List<UserDetails> resolvers) {
 		super();
 		this.id = id;
 		this.departmentName = departmentName;
 		this.departmentHead = departmentHead;
+		this.allIssues = allIssues;
+		this.resolvers = resolvers;
 	}
 
 	public int getId() {
@@ -64,10 +79,29 @@ public class Department {
 		this.departmentHead = departmentHead;
 	}
 
+	public List<Issue> getAllIssues() {
+		return allIssues;
+	}
+
+	public void setAllIssues(List<Issue> allIssues) {
+		this.allIssues = allIssues;
+	}
+
+	public List<UserDetails> getResolvers() {
+		return resolvers;
+	}
+
+	public void setResolvers(List<UserDetails> resolvers) {
+		this.resolvers = resolvers;
+	}
+
 	@Override
 	public String toString() {
 		return "Department [id=" + id + ", departmentName=" + departmentName
-				+ ", departmentHead=" + departmentHead + "]";
+				+ ", departmentHead=" + departmentHead + ", allIssues="
+				+ allIssues + ", resolvers=" + resolvers + "]";
 	}
+	
+	
 
 }

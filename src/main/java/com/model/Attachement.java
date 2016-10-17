@@ -5,8 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
@@ -21,9 +19,8 @@ public class Attachement {
 	@Column(name = "attachment_id")
 	private int id;
 
-	@ManyToOne
-	@JoinColumn(name = "issue_id")
-	private Issues issue;
+	@Column(name = "issue_id")
+	private int issueId;
 
 	@Column(name = "attachment_url")
 	private String attachmentURL;
@@ -32,12 +29,14 @@ public class Attachement {
 		
 	}
 
-	public Attachement(int id, Issues issue, String attachmentURL) {
+	public Attachement(int id, int issueId, String attachmentURL) {
 		super();
 		this.id = id;
-		this.issue = issue;
+		this.issueId = issueId;
 		this.attachmentURL = attachmentURL;
 	}
+
+
 
 	public int getId() {
 		return id;
@@ -47,13 +46,16 @@ public class Attachement {
 		this.id = id;
 	}
 
-	public Issues getIssue() {
-		return issue;
+
+	public int getIssueId() {
+		return issueId;
 	}
 
-	public void setIssue(Issues issue) {
-		this.issue = issue;
+
+	public void setIssueId(int issueId) {
+		this.issueId = issueId;
 	}
+
 
 	public String getAttachmentURL() {
 		return attachmentURL;
@@ -63,10 +65,14 @@ public class Attachement {
 		this.attachmentURL = attachmentURL;
 	}
 
+
+
 	@Override
 	public String toString() {
-		return "Attachement [id=" + id + ", issue=" + issue
+		return "Attachement [id=" + id + ", issueId=" + issueId
 				+ ", attachmentURL=" + attachmentURL + "]";
 	}
+
+	
 
 }
