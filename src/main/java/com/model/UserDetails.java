@@ -49,8 +49,7 @@ public class UserDetails {
 	private String pictureURL;
 	
 	@Autowired
-	@OneToOne
-	@PrimaryKeyJoinColumn
+	@OneToOne(mappedBy="departmentHead")
 	private Department deptHead;
 	
 	/**
@@ -191,18 +190,6 @@ public class UserDetails {
 		this.submittedIssues = submittedIssues;
 	}
 
-
-	@Override
-	public String toString() {
-		return "UserDetails [id=" + id + ", googleId=" + googleId
-				+ ", emailId=" + emailId + ", name=" + name + ", role=" + role
-				+ ", department=" + department + ", pictureURL=" + pictureURL
-				+ ", deptHead=" + deptHead + ", assignedIssueList="
-				+ assignedIssueList + ", submittedIssues=" + submittedIssues
-				+ "]";
-	}
-	
-	
 	
 
 }
