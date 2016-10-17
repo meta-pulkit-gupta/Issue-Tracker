@@ -8,6 +8,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -29,7 +30,8 @@ public class Department {
 	private String departmentName;
 
 	@Autowired
-	@OneToOne(mappedBy="deptHead")
+	@OneToOne
+	@JoinColumn(name="dept_head")
 	private UserDetails departmentHead;
 	
 	@Autowired
@@ -95,13 +97,6 @@ public class Department {
 		this.resolvers = resolvers;
 	}
 
-	@Override
-	public String toString() {
-		return "Department [id=" + id + ", departmentName=" + departmentName
-				+ ", departmentHead=" + departmentHead + ", allIssues="
-				+ allIssues + ", resolvers=" + resolvers + "]";
-	}
-	
 	
 
 }
