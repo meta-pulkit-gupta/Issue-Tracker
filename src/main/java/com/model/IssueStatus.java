@@ -27,7 +27,6 @@ public class IssueStatus {
 	@Column(name = "update_on")
 	private Timestamp updatedOn;
 
-	
 	@Column(name = "updated_by")
 	private int updatedBy;
 	
@@ -39,6 +38,17 @@ public class IssueStatus {
 	public IssueStatus() {
 		super();
 	}
+
+	
+	public IssueStatus(int id, String status, Timestamp updatedOn, int updatedBy) {
+		super();
+		this.id = id;
+		this.status = status;
+		this.updatedOn = updatedOn;
+		this.updatedBy = updatedBy;
+	}
+
+
 
 	public int getId() {
 		return id;
@@ -80,12 +90,5 @@ public class IssueStatus {
 		this.issue = issue;
 	}
 
-	@Override
-	public String toString() {
-		return "IssueStatus [id=" + id + ", status=" + status + ", updatedOn="
-				+ updatedOn + ", updatedBy=" + updatedBy + ", issue=" + issue
-				+ "]";
-	}
-	
 	
 }
