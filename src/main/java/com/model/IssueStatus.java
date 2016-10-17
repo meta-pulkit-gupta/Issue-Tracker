@@ -33,7 +33,7 @@ public class IssueStatus {
 	
 	@Autowired
 	@ManyToOne
-	@JoinColumn(name="issue_id")
+	@JoinColumn(name="issue_id",insertable=false, updatable=false)
 	private Issue issue;
 
 	public IssueStatus() {
