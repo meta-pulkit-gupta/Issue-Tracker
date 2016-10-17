@@ -30,6 +30,17 @@ public class Issue {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "issue_id")
 	private int id;
+	
+	@Column(name="title")
+	private String title;
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
 	@Autowired
 	@ManyToOne(fetch=FetchType.EAGER)
@@ -213,17 +224,6 @@ public class Issue {
 
 	public void setStatusHistory(List<IssueStatus> statusHistory) {
 		this.statusHistory = statusHistory;
-	}
-
-	@Override
-	public String toString() {
-		return "Issue [id=" + id + ", createdBy=" + createdBy + ", createdOn="
-				+ createdOn + ", department=" + department + ", body=" + body
-				+ ", currentStatus=" + currentStatus + ", priority=" + priority
-				+ ", targetResolutionDate=" + targetResolutionDate
-				+ ", actualResolutionDate=" + actualResolutionDate
-				+ ", resolvers=" + resolvers + ", comments=" + comments
-				+ ", tags=" + tags + ", statusHistory=" + statusHistory + "]";
 	}
 
 	
