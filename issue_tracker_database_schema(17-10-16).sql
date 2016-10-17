@@ -191,3 +191,22 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
+ALTER TABLE `issue_tracker`.`department` 
+  ADD CONSTRAINT `fk_dept_head`
+  FOREIGN KEY (`dept_head` )
+  REFERENCES `issue_tracker`.`user_details` (`user_id` )
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION
+, ADD INDEX `fk_dept_head` (`dept_head` ASC) ;
+
+
+
+ALTER TABLE `issue_tracker`.`user_details` 
+  ADD CONSTRAINT `fk_department`
+  FOREIGN KEY (`dept_id` )
+  REFERENCES `issue_tracker`.`department` (`dept_id` )
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION
+, ADD INDEX `fk_department` (`dept_id` ASC) ;
