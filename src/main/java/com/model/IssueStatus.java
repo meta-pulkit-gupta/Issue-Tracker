@@ -24,7 +24,7 @@ public class IssueStatus {
 	@Column(name = "status")
 	private String status;
 
-	@Column(name = "update_on")
+	@Column(name = "updated_on")
 	private Timestamp updatedOn;
 
 	@Column(name = "updated_by")
