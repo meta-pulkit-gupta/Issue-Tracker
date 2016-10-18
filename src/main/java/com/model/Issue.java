@@ -81,7 +81,7 @@ public class Issue {
 	
 	
 	@Autowired
-	@OneToMany(mappedBy="issue")
+	@OneToMany(mappedBy="issue", cascade = { CascadeType.ALL })
 	private List<Comment> comments;
 	
 	
